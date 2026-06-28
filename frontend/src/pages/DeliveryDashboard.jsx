@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { THEMES } from "./theme";
+import { THEMES } from "./Theme";
 import { BottomNav } from "./Layout";
 import Dashboard       from "./Dashboard";
 import { OrdersPage, OrderDetailPage, ActionModal } from "./Orders";

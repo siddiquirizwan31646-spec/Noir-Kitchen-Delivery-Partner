@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TopBar } from "./Layout";
-import { fmt } from "./theme";
+import { fmt } from "./Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBox, faCircleCheck, faChartBar, faDollarSign,

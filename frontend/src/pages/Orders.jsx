@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TopBar, Modal } from "./Layout";
 import { MapPinIcon, PhoneIcon, CopyIcon } from "./Icons";
-import { fmt, shortId, statusStyle, makeBtn, makeField } from "./theme";
+import { fmt, shortId, statusStyle, makeBtn, makeField } from "./Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup, faBiking, faCircleCheck, faCircleXmark,

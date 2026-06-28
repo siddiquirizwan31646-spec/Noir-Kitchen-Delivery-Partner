@@ -1,6 +1,6 @@
 import { TopBar } from "./Layout";
 import { MapPinIcon, PhoneIcon } from "./Icons";
-import { fmt, shortId, todayRange, statusStyle } from "./theme";
+import { fmt, shortId, todayRange, statusStyle } from "./Theme";
 
 /* ─── Active Order Card ───────────────────────────────────── */
 function ActiveOrderCard({ order: o, onPress, T }) {

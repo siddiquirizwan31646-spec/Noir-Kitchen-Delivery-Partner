@@ -1,6 +1,6 @@
 import { TopBar } from "./Layout";
 import { StarIcon, ChevronRightIcon } from "./Icons";
-import { fmt, agentStatusStyle, makeBtn } from "./theme";
+import { fmt, agentStatusStyle, makeBtn } from "./Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClipboardList, faStar, faBell, faLock, faCircleQuestion, faRightFromBracket,

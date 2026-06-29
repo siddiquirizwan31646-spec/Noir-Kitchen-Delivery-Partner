@@ -3,7 +3,11 @@ const DeliveryAgent = require("../models/DeliveryAgent");
 
 const protectDeliveryAgent = async (req, res, next) => {
   try {
-    const token = req.cookies?.deliveryToken;
+    const token =
+      req.cookies?.deliveryToken ||
+      (req.headers.authorization?.startsWith("Bearer ")
+        ? req.headers.authorization.split(" ")[1]
+        : null);
     if (!token) return res.status(401).json({ message: "Not authenticated" });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

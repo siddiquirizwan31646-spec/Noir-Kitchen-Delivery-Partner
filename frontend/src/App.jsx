@@ -11,7 +11,10 @@ function ProtectedDeliveryRoute({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API}/api/delivery-auth/me`, { credentials: "include" })
+    const token = localStorage.getItem("deliveryToken");
+    fetch(`${API}/api/delivery-auth/me`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
       .then(r => r.ok ? r.json() : null)
       .then(data => setAgent(data?.agent || null))
       .finally(() => setLoading(false));
@@ -28,7 +31,10 @@ function DeliveryPublicRoute({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API}/api/delivery-auth/me`, { credentials: "include" })
+    const token = localStorage.getItem("deliveryToken");
+    fetch(`${API}/api/delivery-auth/me`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
       .then(r => r.ok ? r.json() : null)
       .then(data => setAgent(data?.agent || null))
       .finally(() => setLoading(false));

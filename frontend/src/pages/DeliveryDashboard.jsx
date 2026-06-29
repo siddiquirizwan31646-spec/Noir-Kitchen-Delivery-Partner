@@ -44,15 +44,19 @@ export default function DeliveryDashboard() {
   const [actionLoading, setActionLoading] = useState(false);
   const [actionError,   setActionError]   = useState("");
 
-  /* ── loaders ── */
+  const authHeaders = () => {
+    const token = localStorage.getItem("deliveryToken");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   const loadMe = () =>
-    fetch(`${API}/api/delivery-auth/me`, { credentials: "include" })
+    fetch(`${API}/api/delivery-auth/me`, { headers: authHeaders() })
       .then(r => r.ok ? r.json() : null)
       .then(d => setAgent(d?.agent || null))
       .finally(() => setLoading(false));
 
   const loadOrders = () =>
-    fetch(`${API}/api/assign-orders/my`, { credentials: "include" })
+    fetch(`${API}/api/assign-orders/my`, { headers: authHeaders() })
       .then(r => r.ok ? r.json() : [])
       .then(data => {
         setOrders(data);
@@ -83,12 +87,11 @@ export default function DeliveryDashboard() {
     return () => clearInterval(t);
   }, []);
 
-  /* ── actions ── */
   const toggleStatus = async () => {
     const next = agent.status === "Available" ? "Offline" : "Available";
     await fetch(`${API}/api/delivery-auth/status`, {
-      method: "PATCH", credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", ...authHeaders() },
       body: JSON.stringify({ status: next }),
     });
     loadMe();
@@ -96,11 +99,15 @@ export default function DeliveryDashboard() {
 
   const logout = async () => {
     await fetch(`${API}/api/delivery-auth/status`, {
-      method: "PATCH", credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", ...authHeaders() },
       body: JSON.stringify({ status: "Offline" }),
     });
-    await fetch(`${API}/api/delivery-auth/logout`, { method: "POST", credentials: "include" });
+    await fetch(`${API}/api/delivery-auth/logout`, {
+      method: "POST",
+      headers: authHeaders(),
+    });
+    localStorage.removeItem("deliveryToken");
     window.location.href = "/delivery/login";
   };
 
@@ -131,8 +138,8 @@ export default function DeliveryDashboard() {
         };
       }
       const r    = await fetch(url, {
-        method: "PATCH", credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify(body),
       });
       const data = await r.json();

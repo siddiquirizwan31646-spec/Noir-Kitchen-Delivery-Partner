@@ -41,10 +41,10 @@ router.post("/google", async (req, res) => {
     agent.status = "Available";
     await agent.save();
 
-    res.cookie("deliveryToken", signToken(agent._id), cookieOpts);
-    res.json({ message: "Logged in", agent });
+    const token = signToken(agent._id);
+    res.cookie("deliveryToken", token, cookieOpts);
+    res.json({ message: "Logged in", agent, token });
   } catch (err) {
-    console.error("Google verify error:", err.message);
     res.status(401).json({ message: "Google verification failed", error: err.message });
   }
 });
@@ -95,8 +95,9 @@ router.post("/verify-otp", async (req, res) => {
     agent.status = "Available";
     await agent.save();
 
-    res.cookie("deliveryToken", signToken(agent._id), cookieOpts);
-    res.json({ message: "Logged in", agent });
+    const token = signToken(agent._id);
+    res.cookie("deliveryToken", token, cookieOpts);
+    res.json({ message: "Logged in", agent, token });
   } catch (err) {
     console.error("verify-otp error:", err.message);
     res.status(401).json({ message: "OTP verification failed" });

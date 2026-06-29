@@ -339,11 +339,11 @@ function LoginInner() {
       const r = await fetch(`${API}/api/delivery-auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ credential: cred.credential }),
       });
       const data = await r.json();
       if (!r.ok) return setError(data.message || "Login failed");
+      localStorage.setItem("deliveryToken", data.token);
       navigate("/delivery/dashboard");
     } catch {
       setError("Something went wrong. Try again.");
@@ -358,7 +358,6 @@ function LoginInner() {
       const r = await fetch(`${API}/api/delivery-auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ email }),
       });
       const data = await r.json();
@@ -379,11 +378,11 @@ function LoginInner() {
       const r = await fetch(`${API}/api/delivery-auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ email, otp }),
       });
       const data = await r.json();
       if (!r.ok) return setError(data.message || "Invalid OTP");
+      localStorage.setItem("deliveryToken", data.token);
       navigate("/delivery/dashboard");
     } catch {
       setError("Something went wrong. Try again.");

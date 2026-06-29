@@ -43,8 +43,9 @@ router.post("/google", async (req, res) => {
 
     res.cookie("deliveryToken", signToken(agent._id), cookieOpts);
     res.json({ message: "Logged in", agent });
-  } catch {
-    res.status(401).json({ message: "Google verification failed" });
+  } catch (err) {
+    console.error("Google verify error:", err.message);
+    res.status(401).json({ message: "Google verification failed", error: err.message });
   }
 });
 
